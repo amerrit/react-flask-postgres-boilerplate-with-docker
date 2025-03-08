@@ -2,7 +2,7 @@
 
 A modern web application boilerplate featuring React frontend, Flask backend, and PostgreSQL database, all containerized with Docker and orchestrated with Kubernetes. Used as a demo for local Kubernetes deployments on MacOS with several nodes.
 
-## Development
+## Description
 
 Initially this was forked off https://github.com/tomahim/react-flask-postgres-boilerplate-with-docker
 
