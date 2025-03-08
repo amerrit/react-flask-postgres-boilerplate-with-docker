@@ -1,4 +1,44 @@
-client/node_modules
-.idea
-backend/venv
-backend/api/__pycache__
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Secrets and Certificates
+*.pem
+*.key
+*.crt
+*.csr
+*.srl
+.secrets/
+.certs/
+tls.key
+tls.crt
+
+# Development
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Database
+*.sqlite3
+postgres-data/
+
+# Production builds
+build/
+dist/
