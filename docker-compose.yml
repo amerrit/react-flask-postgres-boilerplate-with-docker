@@ -1,45 +1,49 @@
-version: '3.5'
-
+version: '3.8'
 services:
-
-  db:
-    image: postgres:10.5
-    container_name: postgres
+  frontend:
+    build: ./frontend
+    image: frontend:latest
     ports:
-      - '5432:5432'
+      - "80:80"
     environment:
-      - POSTGRES_DB=sport_stats
+      - REACT_APP_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    image: flask:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/sport_stats
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=sport_stats
     volumes:
-      - './db/init:/docker-entrypoint-initdb.d/'
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d sport_stats"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-  flask-api:
-    container_name: app-app
-    restart: always
-    build:
-      context: ./backend/
-      dockerfile: Dockerfile
-    ports:
-      - "5000:80"
-    volumes:
-      - ./backend:/usr/src/app
-    depends_on:
-      - "db"
-
-  client:
-    container_name: react-app
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - './client:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - '3000:3000'
-    depends_on:
-      - "flask-api"
-    environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-      - HOST_URL=http://192.168.99.100:5000
+volumes:
+  postgres-data:
+    driver: local
