@@ -10,6 +10,8 @@ SELECT name
 FROM (VALUES
     ('Mike Trout'),
     ('Shohei Ohtani'),
-    ('Juan Soto')
+    ('Juan Soto'),
+    ('Andrew McCutcheon'),
+    ('Vladimir Guerrero Jr.')
 ) AS test_data(name)
 WHERE NOT EXISTS (SELECT 1 FROM players); 
