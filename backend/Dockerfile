@@ -22,8 +22,7 @@ FROM python:3.9-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    FLASK_ENV=production
+    PYTHONUNBUFFERED=1
 
 # Set the working directory
 WORKDIR /app

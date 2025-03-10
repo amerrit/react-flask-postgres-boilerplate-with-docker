@@ -18,9 +18,9 @@ spec:
       - name: frontend
         image: frontend:latest
         imagePullPolicy: Never
-        env:
-        - name: REACT_APP_API_URL
-          value: "https://baseball-app.test/api"
+        envFrom:
+        - configMapRef:
+            name: frontend-config
         ports:
         - containerPort: 80
         resources:

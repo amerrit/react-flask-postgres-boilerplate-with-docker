@@ -1,0 +1,24 @@
+# Frontend ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_API_URL: "https://baseball-app.test/api"
+  REACT_APP_ENV: "development"
+  REACT_APP_ENABLE_LOGGING: "true"
+  REACT_APP_API_TIMEOUT: "5000"
+---
+# Backend ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  FLASK_ENV: "development"
+  FLASK_DEBUG: "1"
+  CORS_ALLOWED_ORIGINS: "https://baseball-app.test"
+  LOG_LEVEL: "INFO"
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
+  DB_NAME: "postgres"
